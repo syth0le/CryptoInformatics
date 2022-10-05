@@ -23,9 +23,9 @@ class AbstractCipher:
     def _clean_text(self, text: str) -> str:
         return text.lower()
 
-    # @abstractmethod
-    # def auto_encrypt(self, text: str, alph: Alphabet = Alphabet.RUS) -> str:
-    #     pass
+    @abstractmethod
+    def auto_encrypt(self, text: str, alph: Alphabet = Alphabet.RUS) -> str:
+        pass
 
 
 class CaesaerCipher(AbstractCipher):
@@ -61,6 +61,9 @@ class CaesaerCipher(AbstractCipher):
                 res += item
         return res
 
+    def auto_encrypt(self, text: str, alph: Alphabet = Alphabet.RUS) -> str:
+        raise NotImplementedError
+
 
 class VigenerCipher(AbstractCipher):
     class Action(str, Enum):
@@ -92,6 +95,9 @@ class VigenerCipher(AbstractCipher):
             else:
                 res += item
         return res
+
+    def auto_encrypt(self, text: str, alph: Alphabet = Alphabet.RUS) -> str:
+        raise NotImplementedError
 
 
 if __name__ == '__main__':
