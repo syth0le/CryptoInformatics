@@ -66,7 +66,7 @@ class VigenerCipher(AbstractCipher):
     class Action(str, Enum):
         ENCRYPTION = 'ENCRYPTION'
         DECRYPTION = 'DECRYPTION'
-    
+
     def decrypt(self, text: str, shift: Union[str, int], alph: Alphabet = Alphabet.RUS.value) -> str:
         text = self._clean_text(text)
         length = len(alph)
@@ -84,7 +84,10 @@ class VigenerCipher(AbstractCipher):
             shift_idx = alph.index(shift[key_idx])
             if item.isalpha():
                 idx = alph.index(item)
-                curr = (idx + length - shift_idx) % length if action == self.Action.ENCRYPTION else (idx + shift_idx) % length
+                if action == self.Action.ENCRYPTION:
+                    curr = (idx + length - shift_idx) % length
+                else:
+                    curr = (idx + shift_idx) % length
                 res += alph[curr]
             else:
                 res += item
